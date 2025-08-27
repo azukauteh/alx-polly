@@ -38,7 +38,7 @@ export default function PollsPage() {
 
   return (
     <div className="p-8 space-y-6">
-      <h1 className="text-3xl font-bold">Available Polls</h1>
+      <h1 className="text-3xl font-bold">My Polls</h1>
       <p className="text-gray-600">
         Select a poll below and cast your vote!
       </p>

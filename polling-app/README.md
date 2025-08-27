@@ -15,11 +15,11 @@ Users can create polls, vote on polls, share them via links or QR codes, and vie
 * 🔗 Shareable Poll Links – Unique URLs for every poll.
 * 📱 QR Code Generation– Instantly generate a QR code to share your poll.
 * 🎨 Modern UI – Built with [Shadcn UI](https://ui.shadcn.com/) & Tailwind CSS.
-* ☁️ **Deployed on Vercel** for blazing-fast performance.
+* ☁️ Deployed on Vercel for blazing-fast performance.
 
 ---
 
-## **🛠️ Tech Stack**
+## 🛠️ Tech Stack
 
 | Technology       | Purpose                      |
 | ---------------- | ---------------------------- |
@@ -39,10 +39,10 @@ Users can create polls, vote on polls, share them via links or QR codes, and vie
 polling-app/
 ├── app/
 
-│   ├── layout.tsx  
-          # Root layout with Navbar
-│   ├── page.tsx  
-            # Redirects to /polls
+│   ├── layout.tsx   # Root layout with Navbar
+         
+│   ├── page.tsx  # Redirects to /polls
+            
 │   ├── polls/
 
 │   │   ├── page.tsx   # Dashboard page (lists polls)
@@ -138,7 +138,7 @@ npm run dev
 ```
 
 Now visit:
-🔗 [http://localhost:3000](http://localhost:3000)** → You’ll be automatically redirected to `/polls`.
+🔗 [http://localhost:3000](http://localhost:3000) → You’ll be automatically redirected to `/polls`.
 
 ---
 
@@ -159,24 +159,23 @@ npm install -g vercel
 vercel
 ```
 
-🤖 Built with AI Assistance
+🤖 Built 100% with AI Assistance
 
 This project was developed as part of the "AI for Developers" program and was built entirely with AI-powered assistance using tools like:
 
-ChatGPT (GPT-5)
- — planning, debugging, and writing code
+| 🛠️ Tool            | 💡 Purpose   Contribution                                                                                              |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| ChatGPT (GPT-5)   | 🧠 Acted as my AI coding partner — helped plan architecture, debug issues, and write scalable Next.js components. |
 
-Shadcn UI
- — AI-assisted UI generation
+| Shadcn UI       | 🎨 Assisted in generating beautiful, responsive UI components quickly with minimal manual tweaking.               |
 
-Supabase AI
- — database modeling and API integration
+| Supabase AI     | 🗄️ Handled database modeling, authentication, and API
+ integration with AI-generated SQL and setup guidance.      |
+ 
+| Cursor AI       | ⚡ Provided real-time AI-powered coding suggestions, refactoring, and context-aware completions.                   |
 
-Cursor
- — AI-powered coding suggestions
+| Vercel AI       | 🚀 Guided the automated deployment process to ensure smooth hosting and CI/CD setup.                              |
 
-Vercel AI
- — deployment guidance
 
 ## 📜 License
 
@@ -184,12 +183,4 @@ This project is licensed under the MIT License.
 
 ---
 
-## 📌 Next Steps
-
-* ✅ Setup project scaffold
-* ✅ Integrate Shadcn UI
-* 🔄 Implement authentication (Supabase)
-* 🔄 Add poll creation & voting
-* 🔄 Add QR code sharing
-* 🔄 Deploy to Vercel
 
