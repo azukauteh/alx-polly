@@ -44,4 +44,4 @@ rules:
 metadata:
   contact: "azukauteh"
   recommended_branch: "chore/add-coderabbit-config"
-  docs: "./"RULES.md"
+  docs: "./polling_app_rules.md"
