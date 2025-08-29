@@ -1,38 +1,55 @@
 ---
-description: "Project-specific coding rules for the Polling App with QR Code Sharing, guiding folder structure, forms, Supabase usage, and AI-assisted patterns."
+description: "Project-specific rules, coding conventions, and architectural guidelines for the Alx-polly Polling App."
 globs:
   - "/app/**"
-  - "/components/**"
+  - "/components/**
   - "/lib/**"
+  - "/types/**"
 alwaysApply: true
 version: 1
 ---
 
-## Polling App Project Rules
+# ALX Polling App — Project Rules & Conventions
 
-### 1. Folder Structure
-- Routes live inside `/app/polls/` and `/app/api/`.
-- UI components live in `/components/ui/` (shadcn/ui components) or `/components/` (custom components).
-- Utilities, Supabase client setup, and server actions live in `/lib/`.
+You are an AI pair programmer assisting on the ALX Polling App codebase.  
+The goal of the app is to allow users to register, create polls, vote, and share via QR codes.  
+Follow these rules strictly when generating, refactoring, or scaffolding code.
 
-### 2. Forms & UI
-- Use `react-hook-form` for form handling wherever forms are required (e.g., create poll, submit vote).
-- Use shadcn/ui components for buttons, inputs, cards, dialogs, etc.
-- Every form should call a Server Action rather than doing fetch on the client side.
-- Ensure all inputs and buttons have clear labels and accessible focus states.
+---
 
-### 3. Supabase Usage
-- Use Supabase for user authentication (sign-up, login) and database CRUD.
-- Never hardcode Supabase keys; always use `.env.local` with `process.env`.
-- All database interactions (poll creation, voting, fetching results) must use the Supabase client in server components or server actions.
+## Technology Stack
+- Framework: Next.js 14 (App Router)
+- Language: TypeScript
+- Database & Auth: Supabase
+- Styling: Tailwind CSS + shadcn/ui
+- Forms: react-hook-form (when needed)
+- State Management: Prefer Server Components; use Client Components only where interactivity is required.
+- QR Codes: Use the approved QR generation library (qrcode.react or equivalent).
 
-### 4. AI-Assisted Patterns
-- Use AI to scaffold forms, pages, and utilities, but always check against existing rules.
-- Example rule: “Create a form to submit a new poll” — the form must be inside `/app/polls/create`, use `react-hook-form`, and submit via a Server Action to Supabase.
+---
 
-### 5. Verification
-- Before committing, check:
-  - Are routes in `/app/polls` and `/app/api`?
-  - Are forms using `react-hook-form` and shadcn/ui components?
-  - Are Supabase keys and operations secure and correct?
-  - Does AI-generated code follow the existing folder structure and server/client component rules?
+## Folder Structure Rules
+- `/app` → Next.js App Router pages and routes
+    - `/app/polls/` → Poll creation, listing, and voting UI
+    - `/app/api/` → API endpoints (if needed)
+- `/components/ui/` → Reusable shadcn/ui components
+- `/components/` → Custom project-specific components
+- `/lib/` → Supabase client, server actions, and helper functions
+- `/types/` → Centralized TypeScript types
+
+Rule:  
+Do not create new folders outside of these unless approved.
+
+---
+
+## Supabase Rules
+1. Always use the Supabase client from `/lib/supabaseClient.ts` instead of creating new instances.
+2. Use Supabase authentication for sign-up, login, and session handling.
+3. All database queries must:
+   - Be defined inside `/lib/` as helper functions OR
+   - Be used inside Server Actions within the App Router.
+4. Never hardcode API keys. Use `.env.local`:
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=https://your-url.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-public-key
+   SUPABASE_SERVICE_ROLE_KEY=your-secret-key

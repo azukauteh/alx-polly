@@ -1,5 +1,5 @@
 
-Polling App with QR Code Sharing
+🗳️ ALX Polling App
 
 A full-stack polling application built with Next.js 14, Supabase, Shadcn UI, and Tailwind CSS.
 Users can create polls, vote on polls, share them via links or QR codes, and view real-time results.
@@ -18,19 +18,26 @@ Users can create polls, vote on polls, share them via links or QR codes, and vie
 
 ---
 
+
+## 🤖 Built with AI 
+<p align="left"> <img src="https://img.shields.io/badge/AI%20Code%20Review-CodeRabbit-blue?style=for-the-badge" alt="CodeRabbit" /> <img src="https://img.shields.io/badge/AI%20IDE-Cursor-purple?style=for-the-badge" alt="Cursor" /> <img src="https://img.shields.io/badge/AI%20Assistant-ChatGPT-green?style=for-the-badge" alt="ChatGPT" /> <img src="https://img.shields.io/badge/AI%20Pair%20Programming-GitHub%20Copilot-black?style=for-the-badge" alt="GitHub Copilot" /> </p>
+
+
 ## 🛠️ Tech Stack
-
-| Technology       | Purpose                      |
-| ---------------- | ---------------------------- |
-| Next.js 14       | Full-stack React framework   |
-| Supabase         | Database & Authentication    |
-| Shadcn UI        | Reusable UI components       |
-| Tailwind CSS      Styling & responsive layouts |
-| QRCode.react     | QR code generation           |
-| ypeScript        | Type safety                  |
-| Vercel           | Deployment                   |
-
+<p>
+  <img src="https://img.shields.io/badge/Next.js-Framework-black?style=flat-square" alt="Next.js" />
+  <img src="https://img.shields.io/badge/TypeScript-Language-blue?style=flat-square" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Supabase-DB%20%26%20Auth-22c55e?style=flat-square" alt="Supabase" />
+  <img src="https://img.shields.io/badge/Tailwind%20CSS-Styling-06b6d4?style=flat-square" alt="Tailwind" />
+  <img src="https://img.shields.io/badge/shadcn--ui-Components-0ea5e9?style=flat-square" alt="shadcn/ui" />
+  <img src="https://img.shields.io/badge/Vercel-Hosting-000000?style=flat-square" alt="Vercel" />
+</p>
+  
 ---
+
+> Note: AI suggestions were reviewed by a human before merge. See `rules.md` for the project’s AI usage rule 
+>This project was developed  for ALX "AI for Developers"  and was built entirely with AI-powered assistance tools.
+
 
 ## 📂 Project Structure
 
@@ -81,12 +88,16 @@ polling-app/
 └── README.md
 
 ```
+🧩 Project Rules
+
+📜 Read  Project Rules
+ to understand coding patterns, folder structure, and Supabase integration guidelines.
 
 ---
 
 ## ⚡ Getting Started
 
-### 1. Clone the Repository**
+### 1. Clone the Repository
 
 ```bash
 git clone 
@@ -157,26 +168,6 @@ Deploy easily to Vercel:
 npm install -g vercel
 vercel
 ```
-
-🤖 Built 100% with AI Assistance
-
-This project was developed as part of the "AI for Developers" program and was built entirely with AI-powered assistance using tools like:
-
-| 🛠️ Tool            | 💡 Purpose   Contribution                                                                                              |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| ChatGPT (GPT-5)   | 🧠 Acted as my AI coding partner — helped plan architecture, debug issues, and write scalable Next.js components. |
-
-| Shadcn UI       | 🎨 Assisted in generating beautiful, responsive UI components quickly with minimal manual tweaking.               |
-
-| Supabase AI     | 🗄️ Handled database modeling, authentication, and API
- integration with AI-generated SQL and setup guidance.      |
- 
-| Cursor AI       | ⚡ Provided real-time AI-powered coding suggestions, refactoring, and context-aware completions.                   |
-
-| Vercel AI       | 🚀 Guided the automated deployment process to ensure smooth hosting and CI/CD setup.                              |
-
-
-## 📜 License
 
 This project is licensed under the MIT License.
 

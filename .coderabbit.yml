@@ -1,0 +1,47 @@
+version: 1
+name: "ALX Polling-App - CodeRabbit config"
+language: typescript
+framework: nextjs
+
+# Run checks on pull requests
+on:
+  pull_request: true
+
+# High-level checks and project-specific rules
+rules:
+  - id: code-style
+    name: "Code Style & Lint"
+    description: "Ensure code follows project's ESLint/Prettier rules and the project_rules.md conventions."
+    severity: warning
+    always_apply: true
+
+  - id: tailwind-shadcn
+    name: "Tailwind & shadcn/ui Usage"
+    description: "Verify proper use of Tailwind utilities and shadcn/ui components; ensure imports like tailwind-merge and @radix-ui/* are present when used."
+    severity: warning
+
+  - id: supabase-security
+    name: "Supabase & Secrets"
+    description: "Detect hardcoded Supabase keys or other secrets. Ensure DB/auth calls use `/lib/supabase.ts` and env vars are referenced instead of literals."
+    severity: error
+
+  - id: server-actions
+    name: "Server Actions & App Router"
+    description: "Prefer Server Components for data fetching and Next.js Server Actions for mutations; flag client-side fetches in page components where Server Actions should be used."
+    severity: warning
+
+  - id: typecheck-build
+    name: "Type Checking & Build"
+    description: "Run type-check and build: `npm run typecheck` (if present) and `npm run build`. Report failures."
+    severity: error
+
+  - id: security-scan
+    name: "Security Scan"
+    description: "Simple scan for secrets in diffs and common vulnerable deps. Recommend running `npm audit` if failures found."
+    severity: error
+
+# Optional meta (helpful for reviewers)
+metadata:
+  contact: "azukauteh"
+  recommended_branch: "chore/add-coderabbit-config"
+  docs: "./polling_app_rules.md"
