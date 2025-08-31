@@ -1,5 +1,6 @@
 ---
 description: "Project-specific rules, coding conventions, and architectural guidelines for the Polling App."
+
 globs:
   - "/app/"
   - "/components/"
