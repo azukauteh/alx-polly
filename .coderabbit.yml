@@ -1,5 +1,5 @@
 version: 1
-name: "ALX Polling-App - CodeRabbit config"
+name: "Polling-App - CodeRabbit config"
 language: typescript
 framework: nextjs
 

@@ -1,5 +1,5 @@
 
-🗳️ ALX Polling App
+🗳️  Polling App
 
 A full-stack polling application built with Next.js 14, Supabase, Shadcn UI, and Tailwind CSS.
 Users can create polls, vote on polls, share them via links or QR codes, and view real-time results.
