@@ -120,6 +120,7 @@ Create a `.env.local` file in the root directory and add your Supabase credentia
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+
 ```
 
 
@@ -168,6 +169,25 @@ Deploy easily to Vercel:
 npm install -g vercel
 vercel
 ```
+
+---
+
+## 🧪 Usage Examples
+
+### ✅ Creating a Poll
+1. Navigate to `/polls/create`
+2. Enter your question and options
+3. Submit to generate a shareable poll link
+
+### 🗳️ Voting on a Poll
+1. Visit `/polls/[poll-id]`
+2. Select your preferred option
+3. Submit your vote to see real-time results
+
+### 🔗 Sharing a Poll
+- Copy the poll URL or scan the QR code
+- Share with friends or embed in your site
+
 
 This project is licensed under the MIT License.
 
