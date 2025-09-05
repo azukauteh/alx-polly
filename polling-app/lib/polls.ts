@@ -1,4 +1,11 @@
 // lib/polls.ts
+/**
+ * Handles poll creation, fetching, and deletion logic.
+ *
+ * Why: Separating poll operations from UI components ensures reusable,
+ * testable, and maintainable code for database interactions.
+ */
+
 import { supabase } from "./supabaseClient";
 
 export interface CreatePollInput {
@@ -7,26 +14,41 @@ export interface CreatePollInput {
   userId: string;
 }
 
-export async function createPoll({ title, options, userId }: CreatePollInput) {
+/**
+ * Creates a new poll in the database.
+ *
+ * @param input - Object containing poll title, options, and creator ID.
+ * @returns The created poll record.
+ */
+export async function createPoll(input: CreatePollInput) {
+  const { title, options, userId } = input;
+
+  // 🔹 Input validation to prevent empty polls
   if (!title || options.length < 2) {
-    throw new Error("Poll must have a title and at least two options");
+    throw new Error("Poll must have a title and at least 2 options.");
   }
 
-  const { data: poll, error } = await supabase
+  const { data, error } = await supabase
     .from("polls")
-    .insert([{ title, user_id: userId }])
+    .insert([{ title, options, user_id: userId }])
     .select()
     .single();
 
-  if (error) throw error;
+  if (error) throw new Error(`Poll creation failed: ${error.message}`);
+  return data;
+}
 
-  const pollOptions = options.map((option) => ({
-    poll_id: poll.id,
-    option,
-  }));
+/**
+ * Retrieves all polls created by a specific user.
+ *
+ * @param userId - The creator's ID.
+ */
+export async function getUserPolls(userId: string) {
+  const { data, error } = await supabase
+    .from("polls")
+    .select("*")
+    .eq("user_id", userId);
 
-  const { error: optionError } = await supabase.from("poll_options").insert(pollOptions);
-  if (optionError) throw optionError;
-
-  return poll;
+  if (error) throw new Error(`Failed to fetch polls: ${error.message}`);
+  return data;
 }
