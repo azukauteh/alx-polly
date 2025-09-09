@@ -3,11 +3,93 @@ name: "Polling-App CodeRabbit Config"
 language: typescript
 framework: nextjs
 
-# Trigger checks on pull requests
+# 🧠 Review Style & Behavior
+reviews:
+  language: en
+  profile: "chill"  # Options: "chill", "assertive"
+
+request_changes_workflow: true
+
+auto_review:
+  enabled: true
+  drafts: false
+
+# 🚨 Security Scanning
+security_scanning:
+  enabled: true
+  scan_dependencies: true
+  scan_secrets: true
+  vulnerability_alerts: true
+  sast_enabled: true
+
+# 🤖 AI Suggestions
+ai_suggestions:
+  enabled: true
+  features:
+    - code_optimization
+    - security_best_practices
+    - performance_improvements
+    - accessibility_enhancements
+    - test_coverage
+
+# 🧾 Component-Specific Instructions
+component_reviews:
+  - path: "app/**/*.tsx"
+    instructions: |
+      - Optimize component structure and hooks
+      - Address accessibility and theme support
+      - Secure event handlers and prop validation
+
+  - path: "app/lib/actions/*.ts"
+    instructions: |
+      - Validate inputs and handle errors
+      - Check auth, rate limiting, and DB optimization
+
+  - path: "lib/supabase/*.ts"
+    instructions: |
+      - Review DB queries, auth, and data encryption
+      - Monitor for sensitive data leaks
+
+  - path: "app/(auth)/**/*.tsx"
+    instructions: |
+      - Enforce HTTPS, secure sessions, and rate limits
+      - Review cookie handling and JWT usage
+
+# 🚨 Severity Classification
+severity:
+  critical:
+    - security_vulnerabilities
+    - memory_leaks
+    - authentication_bypass
+    - data_exposure
+  high:
+    - performance_issues
+    - security_misconfiguration
+    - insecure_dependencies
+  medium:
+    - code_style_violations
+    - accessibility_issues
+    - type_safety_concerns
+  low:
+    - documentation_missing
+    - code_duplication
+    - naming_conventions
+
+# 📊 Code Metrics & Analysis
+code_metrics:
+  enabled: true
+  analyze:
+    - cyclomatic_complexity
+    - cognitive_complexity
+    - maintainability_index
+    - code_duplication
+    - test_coverage
+
+# 🚀 Trigger Checks on PRs
 on:
   pull_request: true
 
-# Define which rules to run
+# ✅ Rule Execution
 checks:
   - name: "default"
     rules:
@@ -18,7 +100,7 @@ checks:
       - typecheck-build
       - security-scan
 
-# Project-specific rules
+# 📜 Project-Specific Rules
 rules:
   - id: code-style
     name: "Code Style & Lint"
@@ -33,7 +115,7 @@ rules:
 
   - id: supabase-security
     name: "Supabase & Secrets"
-    description: "Detect hardcoded Supabase keys or secrets. Enforce use of env vars and `/lib/supabase.ts` for DB/auth calls."
+    description: "Detect hardcoded Supabase keys or secrets. Enforce use of env vars and `/lib/supabaseClient.ts` for DB/auth calls."
     severity: error
 
   - id: server-actions
@@ -51,7 +133,7 @@ rules:
     description: "Scan for secrets and vulnerable dependencies. Recommend `npm audit` if issues are found."
     severity: error
 
-# Reviewer metadata
+# 🧭 Reviewer Metadata
 metadata:
   contact: "azukauteh"
   recommended_branch: "chore/add-coderabbit-config"
