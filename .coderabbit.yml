@@ -3,56 +3,129 @@ name: "Polling-App CodeRabbit Config"
 language: typescript
 framework: nextjs
 
-# Trigger checks on pull requests
-on:
-  pull_request: true
+# 🧠 Review Style & Behavior
+reviews:
+  language: en
+  profile: "chill"  # Options: "chill", "assertive"
+  review_status: false
+  request_changes_workflow: true
 
-# Define which rules to run
-checks:
-  - name: "default"
-    rules:
-      - code-style
-      - tailwind-shadcn
-      - supabase-security
-      - server-actions
-      - typecheck-build
-      - security-scan
+  auto_review:
+    enabled: true
+    drafts: false
 
-# Project-specific rules
-rules:
-  - id: code-style
-    name: "Code Style & Lint"
-    description: "Ensure code follows ESLint/Prettier rules and conventions in project_rules.md."
-    severity: warning
-    always_apply: true
+  knowledge_base:
+    code_guidelines:
+      filePatterns:
+        - "./polling_app_rules.md"
 
-  - id: tailwind-shadcn
-    name: "Tailwind & shadcn/ui Usage"
-    description: "Check Tailwind utility usage and shadcn/ui components. Ensure imports like tailwind-merge and @radix-ui/* are present when used."
-    severity: warning
+  pre_merge_checks:
+    custom_checks:
+      - id: code-style
+        name: "Code Style & Lint"
+        description: "Ensure code follows ESLint/Prettier rules and conventions in project_rules.md."
+        severity: warning
+        always_apply: true
 
-  - id: supabase-security
-    name: "Supabase & Secrets"
-    description: "Detect hardcoded Supabase keys or secrets. Enforce use of env vars and `/lib/supabase.ts` for DB/auth calls."
-    severity: error
+      - id: tailwind-shadcn
+        name: "Tailwind & shadcn/ui Usage"
+        description: "Check Tailwind utility usage and shadcn/ui components. Ensure imports like tailwind-merge and @radix-ui/* are present when used."
+        severity: warning
 
-  - id: server-actions
-    name: "Server Actions & App Router"
-    description: "Prefer Server Components and Next.js Server Actions for mutations. Flag client-side fetches in page components."
-    severity: warning
+      - id: supabase-security
+        name: "Supabase & Secrets"
+        description: "Detect hardcoded Supabase keys or secrets. Enforce use of env vars and `/lib/supabaseClient.ts` for DB/auth calls."
+        severity: error
 
-  - id: typecheck-build
-    name: "Type Checking & Build"
-    description: "Run `npm run typecheck` and `npm run build`. Report any failures."
-    severity: error
+      - id: server-actions
+        name: "Server Actions & App Router"
+        description: "Prefer Server Components and Next.js Server Actions for mutations. Flag client-side fetches in page components."
+        severity: warning
 
-  - id: security-scan
-    name: "Security Scan"
-    description: "Scan for secrets and vulnerable dependencies. Recommend `npm audit` if issues are found."
-    severity: error
+      - id: typecheck-build
+        name: "Type Checking & Build"
+        description: "Run `npm run typecheck` and `npm run build`. Report any failures."
+        severity: error
 
-# Reviewer metadata
-metadata:
-  contact: "azukauteh"
-  recommended_branch: "chore/add-coderabbit-config"
-  docs: "./polling_app_rules.md"
+      - id: security-scan
+        name: "Security Scan"
+        description: "Scan for secrets and vulnerable dependencies. Recommend `npm audit` if issues are found."
+        severity: error
+
+# 🔧 Tool Integrations (replacing unsupported `security_scanning`)
+tools:
+  integrations:
+    - name: "npm-audit"
+      type: "dependency_scanner"
+      enabled: true
+
+    - name: "dotenvx"
+      type: "secret_scanner"
+      enabled: true
+
+    - name: "sast-check"
+      type: "static_analysis"
+      enabled: true
+
+# 🤖 AI Suggestions
+ai_suggestions:
+  enabled: true
+  features:
+    - code_optimization
+    - security_best_practices
+    - performance_improvements
+    - accessibility_enhancements
+    - test_coverage
+
+# 🧾 Component-Specific Instructions
+component_reviews:
+  - path: "app/**/*.tsx"
+    instructions: |
+      - Optimize component structure and hooks
+      - Address accessibility and theme support
+      - Secure event handlers and prop validation
+
+  - path: "app/lib/actions/*.ts"
+    instructions: |
+      - Validate inputs and handle errors
+      - Check auth, rate limiting, and DB optimization
+
+  - path: "lib/supabase/*.ts"
+    instructions: |
+      - Review DB queries, auth, and data encryption
+      - Monitor for sensitive data leaks
+
+  - path: "app/(auth)/**/*.tsx"
+    instructions: |
+      - Enforce HTTPS, secure sessions, and rate limits
+      - Review cookie handling and JWT usage
+
+# 🚨 Severity Classification
+severity:
+  critical:
+    - security_vulnerabilities
+    - memory_leaks
+    - authentication_bypass
+    - data_exposure
+  high:
+    - performance_issues
+    - security_misconfiguration
+    - insecure_dependencies
+  medium:
+    - code_style_violations
+    - accessibility_issues
+    - type_safety_concerns
+  low:
+    - documentation_missing
+    - code_duplication
+    - naming_conventions
+
+# 📊 Code Metrics & Analysis
+code_metrics:
+  enabled: true
+  analyze:
+    - cyclomatic_complexity
+    - cognitive_complexity
+    - maintainability_index
+    - code_duplication
+    - test_coverage
