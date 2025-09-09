@@ -7,21 +7,65 @@ framework: nextjs
 reviews:
   language: en
   profile: "chill"  # Options: "chill", "assertive"
-  review_status: false  # Suppress status message on non-default branches
+  review_status: false
+  request_changes_workflow: true
 
-request_changes_workflow: true
+  auto_review:
+    enabled: true
+    drafts: false
 
-auto_review:
-  enabled: true
-  drafts: false
+  knowledge_base:
+    code_guidelines:
+      filePatterns:
+        - "./polling_app_rules.md"
 
-# 🚨 Security Scanning
-security_scanning:
-  enabled: true
-  scan_dependencies: true
-  scan_secrets: true
-  vulnerability_alerts: true
-  sast_enabled: true
+  pre_merge_checks:
+    custom_checks:
+      - id: code-style
+        name: "Code Style & Lint"
+        description: "Ensure code follows ESLint/Prettier rules and conventions in project_rules.md."
+        severity: warning
+        always_apply: true
+
+      - id: tailwind-shadcn
+        name: "Tailwind & shadcn/ui Usage"
+        description: "Check Tailwind utility usage and shadcn/ui components. Ensure imports like tailwind-merge and @radix-ui/* are present when used."
+        severity: warning
+
+      - id: supabase-security
+        name: "Supabase & Secrets"
+        description: "Detect hardcoded Supabase keys or secrets. Enforce use of env vars and `/lib/supabaseClient.ts` for DB/auth calls."
+        severity: error
+
+      - id: server-actions
+        name: "Server Actions & App Router"
+        description: "Prefer Server Components and Next.js Server Actions for mutations. Flag client-side fetches in page components."
+        severity: warning
+
+      - id: typecheck-build
+        name: "Type Checking & Build"
+        description: "Run `npm run typecheck` and `npm run build`. Report any failures."
+        severity: error
+
+      - id: security-scan
+        name: "Security Scan"
+        description: "Scan for secrets and vulnerable dependencies. Recommend `npm audit` if issues are found."
+        severity: error
+
+# 🔧 Tool Integrations (replacing unsupported `security_scanning`)
+tools:
+  integrations:
+    - name: "npm-audit"
+      type: "dependency_scanner"
+      enabled: true
+
+    - name: "dotenvx"
+      type: "secret_scanner"
+      enabled: true
+
+    - name: "sast-check"
+      type: "static_analysis"
+      enabled: true
 
 # 🤖 AI Suggestions
 ai_suggestions:
@@ -85,57 +129,3 @@ code_metrics:
     - maintainability_index
     - code_duplication
     - test_coverage
-
-# 🚀 Trigger Checks on PRs
-on:
-  pull_request: true
-
-# ✅ Rule Execution
-checks:
-  - name: "default"
-    rules:
-      - code-style
-      - tailwind-shadcn
-      - supabase-security
-      - server-actions
-      - typecheck-build
-      - security-scan
-
-# 📜 Project-Specific Rules
-rules:
-  - id: code-style
-    name: "Code Style & Lint"
-    description: "Ensure code follows ESLint/Prettier rules and conventions in project_rules.md."
-    severity: warning
-    always_apply: true
-
-  - id: tailwind-shadcn
-    name: "Tailwind & shadcn/ui Usage"
-    description: "Check Tailwind utility usage and shadcn/ui components. Ensure imports like tailwind-merge and @radix-ui/* are present when used."
-    severity: warning
-
-  - id: supabase-security
-    name: "Supabase & Secrets"
-    description: "Detect hardcoded Supabase keys or secrets. Enforce use of env vars and `/lib/supabaseClient.ts` for DB/auth calls."
-    severity: error
-
-  - id: server-actions
-    name: "Server Actions & App Router"
-    description: "Prefer Server Components and Next.js Server Actions for mutations. Flag client-side fetches in page components."
-    severity: warning
-
-  - id: typecheck-build
-    name: "Type Checking & Build"
-    description: "Run `npm run typecheck` and `npm run build`. Report any failures."
-    severity: error
-
-  - id: security-scan
-    name: "Security Scan"
-    description: "Scan for secrets and vulnerable dependencies. Recommend `npm audit` if issues are found."
-    severity: error
-
-# 🧭 Reviewer Metadata
-metadata:
-  contact: "azukauteh"
-  recommended_branch: "chore/add-coderabbit-config"
-  docs: "./polling_app_rules.md"
