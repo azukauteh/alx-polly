@@ -1,12 +1,7 @@
-jest.mock('../lib/supabaseClient', () => ({
-  supabase: {
-    from: jest.fn(() => ({
-      insert: jest.fn(() => ({
-        select: jest.fn(() => ({
-          data: [{ id: 1, title: 'Test Poll', user_id: 'user123' }],
-          error: null,
-        })),
-      })),
-    })),
-  },
-}));
+import { createClient } from "@supabase/supabase-js";
+
+// ✅ Create Supabase client using public env vars
+export const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);

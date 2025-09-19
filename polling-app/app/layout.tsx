@@ -10,6 +10,15 @@ export const metadata: Metadata = {
   description: "Create, share, and vote on polls easily",
 };
 
+/**
+ * RootLayout – Global layout wrapper
+ *
+ * - Applies font and background styling
+ * - Includes Navbar across all pages
+ * - Adds semantic structure and responsive container
+ * - Improves accessibility with language and landmark tags
+ */
+
 export default function RootLayout({
   children,
 }: {
@@ -17,9 +26,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Navbar />
-        <main className="min-h-screen bg-gray-50">{children}</main>
+      <body className={`${inter.className} bg-gray-50`}>
+        <header role="banner">
+          <Navbar />
+        </header>
+        <main
+          role="main"
+          className="min-h-screen max-w-screen-md mx-auto px-4 py-6"
+        >
+          {children}
+        </main>
       </body>
     </html>
   );

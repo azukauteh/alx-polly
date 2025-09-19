@@ -1,12 +1,53 @@
+/**
+ * Unit Tests – createPoll()
+ *
+ * Validates the behavior of the `createPoll` function, which inserts a new poll
+ * and its options into Supabase. Uses Jest to mock Supabase client behavior
+ * and simulate success and failure scenarios.
+ *
+ * 🔧 Mocks:
+ * - `supabase.from("polls").insert(...)`: Simulates poll creation
+ * - `supabase.from("poll_options").insert(...)`: Simulates option insertion
+ *
+ * 🧪 Test Cases:
+ * 1. ✅ Successful poll creation with valid title and options
+ * 2. ❌ Error thrown when title is missing
+ * 3. ❌ Supabase insert failure is handled gracefully
+ *
+ * 🧠 Usage:
+ * ```bash
+ * npm test
+ * ```
+ *
+ * 📁 Location:
+ * - `__tests__/createPoll.test.ts`
+ *
+ * 🔐 Security Notes:
+ * - Tests use mock data only; no real Supabase calls
+ * - Ensure mocks are cleared between tests to avoid bleed
+ *
+ * 🧩 Extension Ideas:
+ * - Add tests for duplicate titles or invalid option formats
+ * - Validate user ownership and role-based restrictions
+ * - Include audit logging verification
+ *
+ * 
+ */
+
+
 
 import { createPoll } from "../lib/polls";
 
 // ✅ Mock Supabase client with table-specific behavior
 jest.mock("../lib/supabaseClient", () => {
-  const mockPollInsert = jest.fn((data) => ({
+  const mockPollInsert = jest.fn((data: any[]) => ({
     select: () => ({
       single: () => ({
-        data: { id: "poll123", title: data[0].title, user_id: data[0].user_id },
+        data: {
+          id: "poll123",
+          title: data[0].title,
+          user_id: data[0].user_id,
+        },
         error: null,
       }),
     }),
@@ -18,7 +59,7 @@ jest.mock("../lib/supabaseClient", () => {
 
   return {
     supabase: {
-      from: jest.fn((table) => {
+      from: jest.fn((table: string) => {
         if (table === "polls") {
           return { insert: mockPollInsert };
         }
@@ -37,7 +78,7 @@ describe("createPoll", () => {
   });
 
   // ✅ Test 1 — Successful poll creation
-  it("should create a poll successfully", async () => {
+  it("creates a poll successfully", async () => {
     const result = await createPoll({
       title: "Best Language",
       options: ["JS", "Python"],
@@ -52,17 +93,21 @@ describe("createPoll", () => {
   });
 
   // ✅ Test 2 — Missing title
-  it("should throw an error if title is missing", async () => {
+  it("throws an error if title is missing", async () => {
     await expect(
-      createPoll({ title: "", options: ["JS", "Python"], userId: "user123" })
-    ).rejects.toThrow("Poll must have a title and at least two options");
+      createPoll({
+        title: "",
+        options: ["JS", "Python"],
+        userId: "user123",
+      })
+    ).rejects.toThrow("Poll must have a title and at least 2 options");
   });
 
-  // ✅ Test 3 — Supabase error
-  it("should handle Supabase error gracefully", async () => {
-    // Override poll insert to simulate error
+  // ✅ Test 3 — Supabase insert error
+  it("handles Supabase insert error gracefully", async () => {
     const { supabase } = require("../lib/supabaseClient");
-    supabase.from.mockImplementationOnce((table) => {
+
+    supabase.from.mockImplementationOnce((table: string) => {
       if (table === "polls") {
         return {
           insert: () => ({
