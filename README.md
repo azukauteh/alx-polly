@@ -44,48 +44,42 @@ Users can create polls, vote on polls, share them via links or QR codes, and vie
 ```
 polling-app/
 ├── app/
-
-│   ├── layout.tsx   # Root layout with Navbar
-         
-│   ├── page.tsx  # Redirects to /polls
-            
-│   ├── polls/
-
-│   │   ├── page.tsx   # Dashboard page (lists polls)
-        
-│   │   ├── create/page.tsx  # Create a new poll
-   
-│   │   └── [id]/page.tsx  # Poll details & voting page
-   
+│   ├── page.tsx                  # Home page
 │   ├── auth/
-
-│   │   ├── login/page.tsx    # Login page
-
-
-│   │   └── register/page.tsx # Registration page
+│   │   └── layout.tsx            # Auth layout
+│   ├── poll/
+│   │   └── [id]/                 # Dynamic poll route
+│   │       └── page.tsx         # Individual poll view
 │
 ├── components/
-
-│   ├── navbar.tsx    # Navigation bar
-        
-│   └── ui/                   # Shadcn UI components
+│   ├── polls/
+│   │   ├── Poll.tsx              # Poll display and voting
+│   │   ├── PollShare.tsx         # QR code generator for sharing
+│   │   └── PollResultChart.tsx   # Chart.js results visualization
 │
 ├── lib/
-│   ├── supabase.ts   # Supabase client
-        
-│   ├── utils.ts              # Helper functions
+│   ├── polls.ts                  # Poll creation logic
+│   ├── supabaseClient.ts         # Supabase client setup
+│   └── utils/
+│       └── generateQrCode.ts     # QR code generation utility
 │
-├── public/    # Static assets
-               
-├── styles/   # Global styles
-                
-├── .env.example    # Environment variables template
-         
-├── package.json
-
-├── tsconfig.json
-
-└── README.md
+├── styles/
+│   └── globals.css               # Global styles (Tailwind, etc.)
+│
+├── __tests__/
+│   ├── polls.test.ts             # Unit tests for createPoll
+│   └── Poll.test.tsx             # Component tests for Poll UI
+│
+├── public/                       # Static assets
+│
+├── jest.config.js                # Jest configuration
+├── jest.env.js                   # Custom test environment setup
+├── tsconfig.json                 # TypeScript config with path aliases
+├── .coderabbit/                  # AI-powered review + release notes
+│   └── config.yaml
+├── .env                          # Runtime environment variables
+├── .env.test                     # Test environment variables
+├── package.json                  # Scripts, dependencies
 
 ```
 🧩 Project Rules
