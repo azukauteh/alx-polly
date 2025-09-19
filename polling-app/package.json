@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
@@ -15,12 +16,18 @@
     "@radix-ui/react-popover": "^1.1.15",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-toast": "^1.2.15",
+    "@react-email/components": "^0.5.3",
     "@supabase/supabase-js": "^2.57.0",
+    "chart.js": "^4.5.0",
     "class-variance-authority": "^0.7.1",
     "lucide-react": "^0.542.0",
     "next": "^14.2.32",
+    "qrcode": "^1.5.4",
     "react": "18.3.1",
+    "react-chartjs-2": "^5.3.0",
     "react-dom": "18.3.1",
+    "react-email": "^4.2.11",
+    "resend": "^6.1.0",
     "shadcn-ui": "latest",
     "tailwind-merge": "^3.3.1",
     "tailwind-variants": "^3.1.0",

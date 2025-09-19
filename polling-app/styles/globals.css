@@ -1,0 +1,51 @@
+/* styles/globals.css */
+
+/* Tailwind base layers (if using Tailwind) */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global focus ring for accessibility */
+:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Responsive text sizing */
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+/* Accessible link styling */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Button focus ring */
+button:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Input focus ring */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
