@@ -4,128 +4,154 @@ language: typescript
 framework: nextjs
 
 # 🧠 Review Style & Behavior
+
 reviews:
-  language: en
-  profile: "chill"  # Options: "chill", "assertive"
-  review_status: false
-  request_changes_workflow: true
+language: en
+profile: "assertive"  # Changed to assertive for stricter enforcement
+review\_status: true
+request\_changes\_workflow: true
 
-  auto_review:
-    enabled: true
-    drafts: false
+auto\_review:
+enabled: true
+drafts: false
 
-  knowledge_base:
-    code_guidelines:
-      filePatterns:
-        - "./polling_app_rules.md"
+knowledge\_base:
+code\_guidelines:
+filePatterns:
+\- "./polling\_app\_rules.md"
 
-  pre_merge_checks:
-    custom_checks:
-      - id: code-style
-        name: "Code Style & Lint"
-        description: "Ensure code follows ESLint/Prettier rules and conventions in project_rules.md."
-        severity: warning
-        always_apply: true
+pre\_merge\_checks:
+custom\_checks:
+\- id: code-style
+name: "Code Style & Lint"
+description: "Ensure code follows ESLint/Prettier rules and conventions in polling\_app\_rules.md."
+severity: error
+always\_apply: true
 
-      - id: tailwind-shadcn
-        name: "Tailwind & shadcn/ui Usage"
-        description: "Check Tailwind utility usage and shadcn/ui components. Ensure imports like tailwind-merge and @radix-ui/* are present when used."
-        severity: warning
+```
+  - id: tailwind-shadcn  
+    name: "Tailwind & shadcn/ui Usage"  
+    description: "Check Tailwind utility usage and shadcn/ui components. Ensure imports like tailwind-merge and @radix-ui/* are present when used."  
+    severity: error  
 
-      - id: supabase-security
-        name: "Supabase & Secrets"
-        description: "Detect hardcoded Supabase keys or secrets. Enforce use of env vars and `/lib/supabaseClient.ts` for DB/auth calls."
-        severity: error
+  - id: supabase-security  
+    name: "Supabase & Secrets"  
+    description: "Detect hardcoded Supabase keys or secrets. Enforce use of env vars and `/lib/supabaseClient.ts` for DB/auth calls."  
+    severity: error  
 
-      - id: server-actions
-        name: "Server Actions & App Router"
-        description: "Prefer Server Components and Next.js Server Actions for mutations. Flag client-side fetches in page components."
-        severity: warning
+  - id: server-actions  
+    name: "Server Actions & App Router"  
+    description: "Prefer Server Components and Next.js Server Actions for mutations. Flag client-side fetches in page components. Require App Router only."  
+    severity: error  
 
-      - id: typecheck-build
-        name: "Type Checking & Build"
-        description: "Run `npm run typecheck` and `npm run build`. Report any failures."
-        severity: error
+  - id: typecheck-build  
+    name: "Type Checking & Build"  
+    description: "Run `npm run typecheck` and `npm run build`. Report and block any failures."  
+    severity: error  
 
-      - id: security-scan
-        name: "Security Scan"
-        description: "Scan for secrets and vulnerable dependencies. Recommend `npm audit` if issues are found."
-        severity: error
+  - id: security-scan  
+    name: "Security Scan"  
+    description: "Scan for secrets and vulnerable dependencies. Recommend `npm audit` if issues are found."  
+    severity: error  
+```
 
-# 🔧 Tool Integrations (replacing unsupported `security_scanning`)
+# 🔧 Tool Integrations (enforced for CI)
+
 tools:
-  integrations:
-    - name: "npm-audit"
-      type: "dependency_scanner"
-      enabled: true
+integrations:
+\- name: "npm-audit"
+type: "dependency\_scanner"
+enabled: true
+severity\_threshold: high
 
-    - name: "dotenvx"
-      type: "secret_scanner"
-      enabled: true
+```
+- name: "dotenvx"  
+  type: "secret_scanner"  
+  enabled: true  
 
-    - name: "sast-check"
-      type: "static_analysis"
-      enabled: true
+- name: "sast-check"  
+  type: "static_analysis"  
+  enabled: true  
+```
 
 # 🤖 AI Suggestions
-ai_suggestions:
-  enabled: true
-  features:
-    - code_optimization
-    - security_best_practices
-    - performance_improvements
-    - accessibility_enhancements
-    - test_coverage
+
+ai\_suggestions:
+enabled: true
+features:
+\- code\_optimization
+\- security\_best\_practices
+\- performance\_improvements
+\- accessibility\_enhancements
+\- test\_coverage
 
 # 🧾 Component-Specific Instructions
-component_reviews:
-  - path: "app/**/*.tsx"
-    instructions: |
-      - Optimize component structure and hooks
-      - Address accessibility and theme support
-      - Secure event handlers and prop validation
 
-  - path: "app/lib/actions/*.ts"
-    instructions: |
-      - Validate inputs and handle errors
-      - Check auth, rate limiting, and DB optimization
+component\_reviews:
 
-  - path: "lib/supabase/*.ts"
-    instructions: |
-      - Review DB queries, auth, and data encryption
-      - Monitor for sensitive data leaks
+* path: "app/\*\*/\*.tsx"
+  instructions: |
 
-  - path: "app/(auth)/**/*.tsx"
-    instructions: |
-      - Enforce HTTPS, secure sessions, and rate limits
-      - Review cookie handling and JWT usage
+  * Avoid unnecessary client components (prefer Server Components by default)
+  * Optimize component structure and hooks
+  * Address accessibility and theme support
+  * Secure event handlers and prop validation
+
+* path: "app/lib/actions/\*.ts"
+  instructions: |
+
+  * Validate inputs and handle errors
+  * Check auth, rate limiting, and DB optimization
+  * Require typed return values for all actions
+
+* path: "lib/supabase/\*.ts"
+  instructions: |
+
+  * Review DB queries, auth, and data encryption
+  * Monitor for sensitive data leaks
+  * Enforce use of environment variables
+
+* path: "app/(auth)/\*\*/\*.tsx"
+  instructions: |
+
+  * Enforce HTTPS, secure sessions, and rate limits
+  * Review cookie handling and JWT usage
+  * Ensure proper logout and token invalidation
 
 # 🚨 Severity Classification
+
 severity:
-  critical:
-    - security_vulnerabilities
-    - memory_leaks
-    - authentication_bypass
-    - data_exposure
-  high:
-    - performance_issues
-    - security_misconfiguration
-    - insecure_dependencies
-  medium:
-    - code_style_violations
-    - accessibility_issues
-    - type_safety_concerns
-  low:
-    - documentation_missing
-    - code_duplication
-    - naming_conventions
+critical:
+\- security\_vulnerabilities
+\- memory\_leaks
+\- authentication\_bypass
+\- data\_exposure
+high:
+\- performance\_issues
+\- security\_misconfiguration
+\- insecure\_dependencies
+medium:
+\- code\_style\_violations
+\- accessibility\_issues
+\- type\_safety\_concerns
+low:
+\- documentation\_missing
+\- code\_duplication
+\- naming\_conventions
 
 # 📊 Code Metrics & Analysis
-code_metrics:
-  enabled: true
-  analyze:
-    - cyclomatic_complexity
-    - cognitive_complexity
-    - maintainability_index
-    - code_duplication
-    - test_coverage
+
+code\_metrics:
+enabled: true
+analyze:
+\- cyclomatic\_complexity
+\- cognitive\_complexity
+\- maintainability\_index
+\- code\_duplication
+\- test\_coverage
+thresholds:
+cyclomatic\_complexity: 10
+cognitive\_complexity: 15
+maintainability\_index: 70
+code\_duplication: 5   # %
+test\_coverage: 80     # %
